@@ -22,6 +22,4 @@ npm run build
 - `src/data/site.ts`: bio, links, education, skills
 - `public/`: résumé PDF
 
-## Deployment
 
-Pushing to `main` builds and deploys the site automatically via GitHub Actions.
