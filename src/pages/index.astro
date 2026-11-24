@@ -1,0 +1,77 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { getProjects } from "../lib/projects";
+import { site, education, skills, achievements } from "../data/site";
+import portrait from "../assets/profile.jpg";
+
+const featured = (await getProjects()).filter((p) => p.data.featured).slice(0, 3);
+---
+
+<Base>
+  <section class="hero">
+    <Image src={portrait} alt={`Portrait of ${site.name}`} width={320} height={320} loading="eager" />
+    <div>
+      <h1>{site.name}</h1>
+      <p class="tagline">{site.tagline}</p>
+      {site.bio.map((para) => <p>{para}</p>)}
+    </div>
+  </section>
+
+  <div class="buttons">
+    <a class="btn primary" href={site.resume}>Résumé (PDF)</a>
+    {site.links.map((l) => <a class="btn" href={l.href}>{l.label}</a>)}
+  </div>
+
+  <section style="margin-top: 3rem">
+    <div class="section-title">
+      <h2>Featured projects</h2>
+      <a href="/projects">All projects →</a>
+    </div>
+    <div class="cards">
+      {featured.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><h2>Education</h2></div>
+    {
+      education.map((e) => (
+        <div class="entry">
+          <div class="entry-head">
+            <h3>{e.school}</h3>
+            <span class="muted">{e.location}</span>
+          </div>
+          <div class="muted">{e.degree}</div>
+          <ul>
+            {e.points.map((pt) => (
+              <li>{pt}</li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </section>
+
+  <section>
+    <div class="section-title"><h2>Skills</h2></div>
+    <dl class="skills">
+      {
+        skills.map((s) => (
+          <>
+            <dt>{s.group}</dt>
+            <dd>{s.items.join(", ")}</dd>
+          </>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section>
+    <div class="section-title"><h2>Achievements</h2></div>
+    <ul class="plain-list">
+      {achievements.map((a) => <li>{a}</li>)}
+    </ul>
+  </section>
+</Base>

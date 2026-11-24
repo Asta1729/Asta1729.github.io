@@ -1,0 +1,40 @@
+---
+import { Image } from "astro:assets";
+import { render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { getProjects } from "../../lib/projects";
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { title, summary, period, course, tags, github, demo, image } = project.data;
+const { Content } = await render(project);
+---
+
+<Base title={title} description={summary}>
+  <a class="back" href="/projects">← All projects</a>
+  <article>
+    <h1>{title}</h1>
+    {(period || course) && <p class="muted">{[course, period].filter(Boolean).join(" · ")}</p>}
+    {
+      tags.length > 0 && (
+        <ul class="tags" style="margin-bottom: 1rem">
+          {tags.map((t) => (
+            <li>{t}</li>
+          ))}
+        </ul>
+      )
+    }
+    <div class="buttons" style="margin: 0 0 2rem">
+      {github && <a class="btn primary" href={github}>View on GitHub</a>}
+      {demo && <a class="btn" href={demo}>Live demo</a>}
+    </div>
+    {image && <Image src={image} alt={title} width={920} style="border-radius: 8px; margin-bottom: 1.5rem" />}
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Base>

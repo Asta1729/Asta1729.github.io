@@ -1,0 +1,39 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+const { title, summary, period, course, tags, github, demo, image } = project.data;
+const href = `/projects/${project.id}`;
+---
+
+<article class="card">
+  {
+    image && (
+      <a class="card-image" href={href} tabindex="-1" aria-hidden="true">
+        <Image src={image} alt="" width={720} />
+      </a>
+    )
+  }
+  <h3><a href={href}>{title}</a></h3>
+  {(period || course) && <p class="meta">{[course, period].filter(Boolean).join(" · ")}</p>}
+  <p>{summary}</p>
+  {
+    tags.length > 0 && (
+      <ul class="tags">
+        {tags.map((t) => (
+          <li>{t}</li>
+        ))}
+      </ul>
+    )
+  }
+  <div class="card-links">
+    <a href={href}>Details →</a>
+    {github && <a href={github}>GitHub</a>}
+    {demo && <a href={demo}>Live demo</a>}
+  </div>
+</article>

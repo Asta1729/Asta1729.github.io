@@ -1,17 +1,22 @@
-_site
-.bundle
-.DS_store
-.idea
-.jekyll-cache
-.jekyll-metadata
-.ruby-version
-.sass-cache
-.tweet-cache
-.venv
-assets/libs/
-assets/rendercv/rendercv_output/*.typ
-al-folio-upgrade-report.md
+# build output
+dist/
+.astro/
+
+# dependencies
 node_modules/
-output/playwright/
-test-results/
-vendor
+
+# environment
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+desktop.ini
+Thumbs.db
+.vscode/
+.idea/
+
+# Private originals: keep out of the public repo.
+# The public résumé lives at public/Nirupam_Punna_Resume.pdf (phone number removed).
+/Resume*.pdf
+/Profile.jpeg

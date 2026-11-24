@@ -1,0 +1,16 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../data/site";
+---
+
+<Base title="Résumé">
+  <div class="entry-head" style="align-items: center; margin-bottom: 1.25rem">
+    <h1>Résumé</h1>
+    <a class="btn primary" href={site.resume} download>Download PDF</a>
+  </div>
+  <object class="pdf-frame" data={site.resume} type="application/pdf" aria-label="Résumé PDF">
+    <p>
+      Your browser can't display the PDF here. <a href={site.resume}>Open the résumé</a> instead.
+    </p>
+  </object>
+</Base>
