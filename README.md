@@ -45,4 +45,11 @@ Longer write-up, results, tables, screenshots…
 | Bio, links, education, skills, awards    | `src/data/site.ts`           |
 | Profile photo                            | `src/assets/profile.jpg`     |
 | Résumé PDF                               | `public/Nirupam_Punna_Resume.pdf` |
+| Résumé preview image (on /resume)        | `src/assets/resume.png`      |
+
+When you replace the résumé PDF, also replace `src/assets/resume.png` with a fresh screenshot/export of page 1
+so the preview matches.
+
+`node_modules/`, `dist/` and `.astro/` are generated locally by `npm install` / `npm run build` and are not committed.
+You can delete them any time; GitHub Actions installs and builds everything on its own.
 | Colours, fonts, spacing                  | `src/styles/global.css`      |

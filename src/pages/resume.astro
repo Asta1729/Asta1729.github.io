@@ -1,16 +1,26 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import { site } from "../data/site";
+import resumePreview from "../assets/resume.png";
 ---
 
 <Base title="Résumé">
-  <div class="entry-head" style="align-items: center; margin-bottom: 1.25rem">
+  <div class="resume-head">
     <h1>Résumé</h1>
-    <a class="btn primary" href={site.resume} download>Download PDF</a>
+    <div class="buttons" style="margin: 0">
+      <a class="btn" href={site.resume} target="_blank" rel="noopener">Open PDF</a>
+      <a class="btn primary" href={site.resume} download>Download</a>
+    </div>
   </div>
-  <object class="pdf-frame" data={site.resume} type="application/pdf" aria-label="Résumé PDF">
-    <p>
-      Your browser can't display the PDF here. <a href={site.resume}>Open the résumé</a> instead.
-    </p>
-  </object>
+
+  <a class="paper" href={site.resume} target="_blank" rel="noopener" aria-label="Open résumé PDF">
+    <Image
+      src={resumePreview}
+      alt={`Résumé of ${site.name}`}
+      widths={[700, 1000, 1400]}
+      sizes="(max-width: 760px) 100vw, 46rem"
+      loading="eager"
+    />
+  </a>
 </Base>
