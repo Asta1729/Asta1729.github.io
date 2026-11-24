@@ -95,9 +95,39 @@ img {
   padding: 0 1.25rem;
 }
 
+/* ---------- subtle background texture ---------- */
+:root {
+  --dot: rgba(0, 0, 0, 0.09);
+}
+:root[data-theme="dark"] {
+  --dot: rgba(255, 255, 255, 0.07);
+}
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 34rem;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+}
+body {
+  position: relative;
+  isolation: isolate;
+}
+
 /* ---------- header / footer ---------- */
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 .site-header .container {
   display: flex;
@@ -201,6 +231,21 @@ section + section {
   letter-spacing: 0.08em;
   color: var(--muted);
 }
+/* numbered section labels: 01, 02, … */
+main {
+  counter-reset: section;
+}
+.section-title {
+  counter-increment: section;
+}
+.section-title h2::before {
+  content: counter(section, decimal-leading-zero);
+  font-family: var(--mono);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--fg);
+  margin-right: 0.75rem;
+}
 .section-title a {
   font-size: 0.9rem;
 }
@@ -217,6 +262,8 @@ section + section {
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+  outline: 1px solid var(--border);
+  outline-offset: 6px;
 }
 .hero .tagline {
   color: var(--muted);
@@ -312,10 +359,33 @@ section + section {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1.1rem 1.25rem;
-  transition: border-color 0.15s;
+  background: var(--bg);
+  transition:
+    border-color 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 .card:hover {
   border-color: var(--muted);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+.card .arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+}
+.card:hover .arrow {
+  transform: translateX(3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card .arrow {
+    transition: none;
+  }
+  .card:hover,
+  .card:hover .arrow {
+    transform: none;
+  }
 }
 .card h3 a {
   color: var(--fg);
